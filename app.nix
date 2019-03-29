@@ -24,6 +24,7 @@ in {
               app = appName;
             };
 
+            environmentSecret = appName;
             environment = config.environment ++ attrs.environment;
           };
         }
@@ -40,6 +41,7 @@ in {
 
             serviceOpts = config.services.${attrs.service} // {
               environment = config.environment;
+              environmentSecret = appName;
             };
           };
         }
