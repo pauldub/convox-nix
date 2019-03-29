@@ -24,8 +24,11 @@ in {
               app = appName;
             };
 
+
             environmentSecret = appName;
-            environment = config.environment ++ attrs.environment;
+            environment = config.environment ++ attrs.environment ++ [
+              "VERSION=${config.version}"
+            ];
           };
         }
       ) config.services;

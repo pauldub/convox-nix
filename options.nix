@@ -150,6 +150,11 @@ rec {
         default = [];
       };
 
+      version = mkOption {
+        description = "Version of the deployment";
+        type = types.string;
+      };
+
       services = mkOption {
         description = "Services";
         type = types.attrsOf (types.submodule service);
