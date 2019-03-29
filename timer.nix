@@ -26,11 +26,11 @@ in {
 
             jobTemplate.spec.template = {
               spec.restartPolicy = "Never";
-              spec.containers.${name} = (traceVal (mkDeployment {
+              spec.containers.${name} = (mkDeployment {
                 name = config.service;
                 config = config.serviceOpts;
                 labels = labels;
-              }).spec.template.spec.containers.${config.service}) // {
+              }).spec.template.spec.containers.${config.service} // {
                 command = mkIf (config.command != null) config.command;
                 ports = [];
                 readinessProbe = null;
