@@ -33,10 +33,10 @@ in {
           spec = {
             type = "ClusterIP";
 
-            ports.${toString config.port} = {
-              name = "http";
-              targetPort = config.port;
-            };
+            ports =
+              genAttrs
+              (map toString (toList config.port))
+              (port: { targetPort = port; });
 
             selector = labels;
           };

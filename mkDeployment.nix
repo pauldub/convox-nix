@@ -29,12 +29,10 @@ in {
       spec.containers."${name}" = {
         image = mkIf (config.image != null) config.image;
         command = mkIf (config.command != null) config.command;
-        ports = mkIf (isList config.port)
-        map (port: { containerPort = port; }) config.ports
-        [{
-          containerPort = config.port;
-          name = name;
-        }];
+        ports =
+          map
+          (port: { containerPort = port; })
+          (toList config.port);
         resources = {
           requests = {
             memory = mkIf (config.scale.memory != null)
