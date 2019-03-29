@@ -64,6 +64,12 @@ rec {
         default = name;
         type = types.string;
       };
+
+      serviceAccount = mkOption {
+        description = "Service account used by the service deployment";
+        default = null;
+        type = types.nullOr types.string;
+      };
     };
   };
 

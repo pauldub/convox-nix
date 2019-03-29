@@ -26,6 +26,8 @@ in {
       metadata.name = name;
       metadata.labels = labels;
 
+      spec.serviceAccountName = mkIf (config.serviceAccount != null) config.serviceAccount;
+
       spec.containers."${name}" = {
         image = mkIf (config.image != null) config.image;
         command = mkIf (config.command != null) config.command;
