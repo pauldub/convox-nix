@@ -30,6 +30,7 @@ in {
 
       spec.containers."${name}" = {
         image = mkIf (config.image != null) config.image;
+        imagePullPolicy = "Always";
         command = mkIf (config.command != null) config.command;
         ports = mapAttrsToList (name: port: {
           name = name;
