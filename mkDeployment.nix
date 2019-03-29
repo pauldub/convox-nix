@@ -31,10 +31,11 @@ in {
       spec.containers."${name}" = {
         image = mkIf (config.image != null) config.image;
         command = mkIf (config.command != null) config.command;
-        ports =
-          map
-          (port: { containerPort = port; name = toString port; })
-          (toList config.port);
+        ports = mapAttrsToList (name: port: {
+          name = name;
+          containerPort = port;
+        }) config.port;
+
         resources = {
           requests = {
             memory = mkIf (config.scale.memory != null)
@@ -44,21 +45,27 @@ in {
           };
         };
 
-        readinessProbe = mkIf (config.health != null) {
+        readinessProbe = mkIf (
+          config.health != null &&
+          (hasAttr "http" config.port)
+        ) {
           httpGet = {
             path = if isString config.health
             then config.health
             else config.health.path;
-            port = config.port;
+            port = config.port.http;
           };
         };
 
-        livenessProbe = mkIf (config.health != null) {
+        livenessProbe = mkIf (
+          config.health != null &&
+          (hasAttr "http" config.port)
+        ) {
           httpGet = {
             path = if isString config.health
             then config.health
             else config.health.path;
-            port = config.port;
+            port = config.port.http;
           };
         };
 

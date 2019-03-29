@@ -37,7 +37,7 @@ rec {
 
       port = mkOption {
         description = "Port the service listens on";
-        type = types.either types.ints.u16 (types.listOf types.ints.u16);
+        type = types.nullOr (types.attrsOf types.ints.u16);
       };
 
       health = mkOption {
