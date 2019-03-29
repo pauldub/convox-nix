@@ -33,7 +33,7 @@ in {
         command = mkIf (config.command != null) config.command;
         ports =
           map
-          (port: { containerPort = port; })
+          (port: { containerPort = port; name = toString port; })
           (toList config.port);
         resources = {
           requests = {
@@ -44,18 +44,22 @@ in {
           };
         };
 
-        readinessProbe.httpGet = mkIf (config.health != null) {
-          path = if isString config.health
-          then config.health
-          else config.health.path;
-          port = config.port;
+        readinessProbe = mkIf (config.health != null) {
+          httpGet = {
+            path = if isString config.health
+            then config.health
+            else config.health.path;
+            port = config.port;
+          };
         };
 
-        livenessProbe.httpGet = mkIf (config.health != null) {
-          path = if isString config.health
-          then config.health
-          else config.health.path;
-          port = config.port;
+        livenessProbe = mkIf (config.health != null) {
+          httpGet = {
+            path = if isString config.health
+            then config.health
+            else config.health.path;
+            port = config.port;
+          };
         };
 
         env = (buildEnvVars config.environment);
