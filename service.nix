@@ -36,7 +36,7 @@ in {
             ports =
               genAttrs
               (map toString (toList config.port))
-              (port: { targetPort = port; });
+              (port: { targetPort = port; name = port; });
 
             selector = labels;
           };
