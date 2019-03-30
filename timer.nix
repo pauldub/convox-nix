@@ -26,7 +26,7 @@ in {
 
             jobTemplate.spec.template = {
               spec.restartPolicy = "Never";
-              spec.serviceAccountName = mkif (config.serviceOpts.serviceAccount != null) config.serviceOpts.serviceAccount;
+              spec.serviceAccountName = mkIf (config.serviceOpts.serviceAccount != null) config.serviceOpts.serviceAccount;
               spec.containers.${name} = (mkDeployment {
                 name = config.service;
                 config = config.serviceOpts;
