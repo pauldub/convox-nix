@@ -43,11 +43,10 @@ in {
             };
 
             serviceOpts = config.services.${attrs.service} // {
+              environmentSecret = appName;
               environment = config.environment ++ [
                 "VERSION=${config.version}"
               ];
-
-              environmentSecret = appName;
             };
           };
         }
