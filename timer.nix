@@ -25,6 +25,8 @@ in {
             schedule = config.schedule;
 
             jobTemplate.spec.template = {
+              metadata.labels = labels;
+
               spec.restartPolicy = "Never";
               spec.serviceAccountName = mkIf (config.serviceOpts.serviceAccount != null) config.serviceOpts.serviceAccount;
               spec.containers.${name} = (mkDeployment {
