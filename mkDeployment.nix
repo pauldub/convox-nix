@@ -46,29 +46,29 @@ in {
           };
         };
 
-        readinessProbe = mkIf (
-          config.health != null &&
-          (hasAttr "http" config.port)
-        ) {
-          httpGet = {
-            path = if isString config.health
-            then config.health
-            else config.health.path;
-            port = config.port.http;
-          };
-        };
+        # readinessProbe = mkIf (
+        #   config.health != null &&
+        #   (hasAttr "http" config.port)
+        # ) {
+        #   httpGet = {
+        #     path = if isString config.health
+        #     then config.health
+        #     else config.health.path;
+        #     port = config.port.http;
+        #   };
+        # };
 
-        livenessProbe = mkIf (
-          config.health != null &&
-          (hasAttr "http" config.port)
-        ) {
-          httpGet = {
-            path = if isString config.health
-            then config.health
-            else config.health.path;
-            port = config.port.http;
-          };
-        };
+        # livenessProbe = mkIf (
+        #   config.health != null &&
+        #   (hasAttr "http" config.port)
+        # ) {
+        #   httpGet = {
+        #     path = if isString config.health
+        #     then config.health
+        #     else config.health.path;
+        #     port = config.port.http;
+        #   };
+        # };
 
         env = (buildEnvVars config.environment);
       };

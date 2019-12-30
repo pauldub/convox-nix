@@ -1,4 +1,4 @@
-{ lib, k8s, config, pkgs, ...}:
+{ lib, k8s, options, config, pkgs, ...}:
 
 with lib;
 
@@ -8,7 +8,7 @@ let
     inherit k8s lib pkgs;
   };
 in {
-  config.kubernetes.moduleDefinitions.convox.module = { name, config, module, ... }: {
+  kubernetes.moduleDefinitions.convox.module = { name, config, module, ... }: {
     imports = [];
 
     options = convox-options.manifest.options;

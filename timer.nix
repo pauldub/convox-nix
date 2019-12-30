@@ -1,11 +1,11 @@
-{ lib, k8s, config, pkgs, ...}:
+{ lib, k8s, options, config, pkgs, ...}:
 
 with lib;
 let
   convox-options = pkgs.callPackage ./options.nix {};
   mkDeployment = pkgs.callPackage ./mkDeployment.nix { k8s = k8s; };
 in {
-  config.kubernetes.moduleDefinitions.convox-timer.module = { name, config, ... }: {
+  kubernetes.moduleDefinitions.convox-timer.module = { name, config, ... }: {
     imports = [];
     options = (convox-options.timer { inherit name config; }).options;
 
